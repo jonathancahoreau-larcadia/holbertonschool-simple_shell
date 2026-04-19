@@ -11,7 +11,7 @@
  */
 int main(void)
 {
-	char *line = NULL, *argv[2];
+	char *line = NULL, **args;
 	size_t len = 0;
 	ssize_t nread = 0;
 	int interactive = isatty(STDIN_FILENO);
@@ -29,8 +29,10 @@ int main(void)
 		if (line[nread - 1] == '\n')
 			line[nread - 1] = '\0';
 
-		argv[0] = line;
-		argv[1] = NULL;
+		args = tokenize(line);
+		if(!args)
+			continue;
+
 		pid = fork();
 		if (pid < 0)
 		{
@@ -39,12 +41,16 @@ int main(void)
 		}
 		if (pid == 0)
 		{
-			execve(argv[0], argv, environ);
+			execve(args[0], args, environ);
 			perror("execve");
 			exit(1);
 		}
 		if (pid > 0)
+		{
 			wait(NULL);
+			free_tokens(args);
+		}
+
 	}
 	free(line);
 	return (0);
