@@ -24,10 +24,8 @@ int main(void)
 
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
-		{
-			free(line);
 			exit(0);
-		}
+			
 		if (line[nread - 1] == '\n')
 			line[nread - 1] = '\0';
 
