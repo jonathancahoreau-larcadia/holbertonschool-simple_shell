@@ -23,7 +23,7 @@ int main(int ac, char **av)
 	while (1)
 	{
 		if (interactive)
-			printf("$ ");
+			printf("#cisfun$ ");
 
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
