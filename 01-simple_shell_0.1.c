@@ -46,7 +46,7 @@ int main(int ac, char **av)
 		if (pid == 0)
 		{
 			execve(argv[0], argv, environ);
-			perror(argv[0]);
+			fprintf(stderr, "./hsh: No such file or directory\n");
 			exit(1);
 		}
 		if (pid > 0)
