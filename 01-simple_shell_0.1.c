@@ -24,8 +24,11 @@ int main(void)
 
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
+		{
+			if (interactive)
+				printf("\n");
 			break;
-
+		}
 		if (line[nread - 1] == '\n')
 			line[nread - 1] = '\0';
 		if (line[0] == '\0')
@@ -41,7 +44,7 @@ int main(void)
 		if (pid == 0)
 		{
 			execve(argv[0], argv, environ);
-			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
+			fprintf(stderr, "./hsh: No such file or directory\n");
 			exit(1);
 		}
 		if (pid > 0)
