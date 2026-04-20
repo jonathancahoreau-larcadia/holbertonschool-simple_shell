@@ -28,7 +28,8 @@ int main(void)
 
 		if (line[nread - 1] == '\n')
 			line[nread - 1] = '\0';
-
+		if (line[0] == '\0')
+			continue;
 		argv[0] = line;
 		argv[1] = NULL;
 		pid = fork();
@@ -40,7 +41,7 @@ int main(void)
 		if (pid == 0)
 		{
 			execve(argv[0], argv, environ);
-			perror(argv[0]);
+			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 			exit(1);
 		}
 		if (pid > 0)
