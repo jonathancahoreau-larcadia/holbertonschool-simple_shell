@@ -5,9 +5,11 @@
 #include <sys/wait.h>
 #include "main.h"
 /**
- * main - Entry point
+ * main - Entry point of the shell program
+ * @ac: Number of command-line arguments (unused)
+ * @av: Array of command-line arguments; av[0] stores the program name
  *
- * Return: (0), if sucess
+ * Return: 0 on success
  */
 int main(int ac, char **av)
 {
@@ -18,12 +20,10 @@ int main(int ac, char **av)
 	pid_t pid;
 	(void) ac;
 
-
 	while (1)
 	{
 		if (interactive)
 			printf("#cisfun$ ");
-
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
 		{
@@ -31,26 +31,19 @@ int main(int ac, char **av)
 				printf("\n");
 			break;
 		}
-		if (line[nread - 1] == '\n')
+		if (nread > 0 && line[nread - 1] == '\n')
 			line[nread - 1] = '\0';
 		if (line[0] == '\0')
 			continue;
-		argv[0] = line;
-		argv[1] = NULL;
+		argv[0] = line,	argv[1] = NULL;
 		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			continue;
-		}
 		if (pid == 0)
 		{
 			execve(argv[0], argv, environ);
 			perror(av[0]);
 			exit(1);
 		}
-		if (pid > 0)
-			wait(NULL);
+		wait(NULL);
 	}
 	free(line);
 	return (0);
