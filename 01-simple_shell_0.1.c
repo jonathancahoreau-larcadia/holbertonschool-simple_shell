@@ -12,12 +12,13 @@
 int main(int ac, char **av)
 {
 	char *line = NULL, *argv[2];
+	char *shell_name = av[0];
 	size_t len = 0;
 	ssize_t nread = 0;
 	int interactive = isatty(STDIN_FILENO);
 	pid_t pid;
 	(void) ac;
-	(void) av;
+
 
 	while (1)
 	{
@@ -46,7 +47,7 @@ int main(int ac, char **av)
 		if (pid == 0)
 		{
 			execve(argv[0], argv, environ);
-			fprintf(stderr, "./hsh: No such file or directory\n");
+			perror(shell_name);
 			exit(1);
 		}
 		if (pid > 0)
