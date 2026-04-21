@@ -69,7 +69,7 @@ void free_tokens(char **args)
  *
  * Return: A pointer to a static NULL-terminated array of tokens
  */
-char **tokenizes (char *line)
+char **tokenizes(char *line)
 {
 	static char *argv[2];
 	char *token;

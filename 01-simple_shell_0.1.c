@@ -1,7 +1,8 @@
 #include "main.h"
 /**
  * main - Entry point
- *
+ *@ac: int argument
+ *@av: double pointer on char
  * Return: (0), if sucess
  */
 
