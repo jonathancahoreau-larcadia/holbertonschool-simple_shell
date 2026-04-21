@@ -44,7 +44,7 @@ int main(int ac, char **av)
 			if (execve(argv[0], argv, environ) == -1)
 			{
 
-				fprintf(stderr, "%s: %s: not found\n", av[0], argv[0]);
+				perror(av[0]);
 				free(line);
 				exit(127);
 			}
