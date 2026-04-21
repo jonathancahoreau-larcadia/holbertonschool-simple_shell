@@ -7,7 +7,7 @@
  *         Each element is a token extracted from the input.
  *         Returns NULL on allocation failure.
  */
-char **tokenize(const char *input)
+char **tokenize(const char *line)
 {
 	char **args, **tmp;
 	size_t count = 0;
@@ -18,7 +18,7 @@ char **tokenize(const char *input)
 	if (!args)
 		return (NULL);
 
-	copy = strdup(input);
+	copy = strdup(line);
 	if (!copy)
 	{
 		free(args);
@@ -69,7 +69,7 @@ void free_tokens(char **args)
  *
  * Return: A pointer to a static NULL-terminated array of tokens
  */
-char **tokenizes (char *line)
+/*char **tokenizes (char *line)
 {
 	static char *argv[2];
 	char *token;
@@ -85,4 +85,4 @@ char **tokenizes (char *line)
 	argv[i] = NULL;
 
 	return (argv);
-}
+}*/

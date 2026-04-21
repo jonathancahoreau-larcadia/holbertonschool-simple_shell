@@ -7,5 +7,6 @@
 #include <sys/wait.h>
 extern char **environ;
 char **tokenizes (char *line);
+char **tokenize(const char *line);
 void free_tokens(char **args);
 #endif
