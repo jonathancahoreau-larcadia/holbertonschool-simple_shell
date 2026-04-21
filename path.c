@@ -26,7 +26,6 @@ char *find_path(char *command)
 
 	dir = strtok(path_copy, ":");
 	while (dir != NULL)
-    dir = strtok (NULL, ':');
 	{
 		sprintf(full_path, "%s/%s", dir, command);
 		if (access(full_path, X_OK) == 0)
