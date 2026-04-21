@@ -1,21 +1,18 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/wait.h>
 #include "main.h"
 /**
  * main - Entry point
  *
  * Return: (0), if sucess
  */
-int main(void)
+
+int main(int ac, char **av)
 {
-	char *line = NULL, *argv[2];
+	char *line = NULL, **argv;
 	size_t len = 0;
 	ssize_t nread = 0;
 	int interactive = isatty(STDIN_FILENO);
 	pid_t pid;
+	(void) ac;
 
 	while (1)
 	{
@@ -25,12 +22,12 @@ int main(void)
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
 			exit(0);
-			
-		if (line[nread - 1] == '\n')
-			line[nread - 1] = '\0';
 
-		argv[0] = line;
-		argv[1] = NULL;
+		argv = tokenizes(line);
+
+		if (argv[0] == NULL)
+			continue;
+
 		pid = fork();
 		if (pid < 0)
 		{
@@ -40,7 +37,7 @@ int main(void)
 		if (pid == 0)
 		{
 			execve(argv[0], argv, environ);
-			perror("execve");
+			perror(av[0]);
 			exit(1);
 		}
 		if (pid > 0)
