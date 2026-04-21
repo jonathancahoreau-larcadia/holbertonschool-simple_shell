@@ -11,12 +11,12 @@ char **tokenizes(char *line)
 	char *token;
 	int i = 0;
 
-	token = strtok(line, " \n");
+	token = strtok(line, " \t\n");
 	while (token)
 	{
 		argv[i] = token;
 		i++;
-		token = strtok(NULL, " \n");
+		token = strtok(NULL, " \t\n");
 	}
 	argv[i] = NULL;
 
