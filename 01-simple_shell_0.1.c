@@ -22,8 +22,12 @@ int main(int ac, char **av)
 
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
+		{
+			if (interactive)
+				printf("\n");
+			free(line);
 			exit(0);
-
+		}
 		argv = tokenizes(line);
 
 		if (argv[0] == NULL)
@@ -37,9 +41,13 @@ int main(int ac, char **av)
 		}
 		if (pid == 0)
 		{
-			execve(argv[0], argv, environ);
-			perror(av[0]);
-			exit(1);
+			if (execve(argv[0], argv, environ) == -1)
+			{
+
+				fprintf(stderr, "%s: %s: not found\n", av[0], argv[0]);
+				free(line);
+				exit(127);
+			}
 		}
 		if (pid > 0)
 			wait(NULL);
