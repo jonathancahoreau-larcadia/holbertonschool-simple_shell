@@ -1,4 +1,25 @@
 #include "main.h"
+
+int execute(char **args, int *countline, char **av)
+{
+	pid_t pid;
+
+	pid = fork();
+		if (pid == 0)
+		{
+			if (execve(args[0], args, environ) == -1)
+			{
+				fprintf(stderr, "%s: %d: %s: not found\n", av[0], *countline, args[0]);
+				exit(127);
+			}
+		}
+		if (pid > 0)
+		{
+			wait(NULL);
+			free_tokens(args);
+		}
+	return (0);
+}
 /**
  * tokenize - Split an input string into an array of tokens
  * @input: The input string to split (not modified)

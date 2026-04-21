@@ -15,8 +15,7 @@ int main(int ac, char **av)
 	char *line = NULL, **args;
 	size_t len = 0;
 	ssize_t nread = 0;
-	int interactive = isatty(STDIN_FILENO), countline = 0;
-	pid_t pid;
+	int interactive = isatty(STDIN_FILENO), countline = 0, run;
 	(void) ac;
 
 	while (1)
@@ -40,22 +39,9 @@ int main(int ac, char **av)
 		args = tokenize(line);
 		if (!args)
 			continue;
-
-		pid = fork();
-		if (pid == 0)
-		{
-			if (execve(args[0], args, environ) == -1)
-			{
-				fprintf(stderr, "%s: %d: %s: not found\n", av[0], countline, args[0]);
-				free(line);
-				exit(127);
-			}
-		}
-		if (pid > 0)
-		{
-			wait(NULL);
-			free_tokens(args);
-		}
+		run = execute(args, &countline, av);
+		if (run == -1)
+			return (-1);
 	}
 	free(line);
 	return (0);
