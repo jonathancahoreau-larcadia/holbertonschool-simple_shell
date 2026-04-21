@@ -6,7 +6,8 @@
 #include "main.h"
 /**
  * main - Entry point
- *
+ * @ac: argument count
+ * @av: argument vector
  * Return: (0), if sucess
  */
 int main(int ac, char **av)
@@ -37,15 +38,10 @@ int main(int ac, char **av)
 			line[nread - 1] = '\0';
 
 		args = tokenize(line);
-		if(!args)
+		if (!args)
 			continue;
 
 		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			continue;
-		}
 		if (pid == 0)
 		{
 			if (execve(args[0], args, environ) == -1)
