@@ -12,7 +12,7 @@ char *on_path(char *command)
 
 	if (!command || command[0] == '\0')
 		return (NULL);
-	if (command[0] == '/' || command[0] == '.')
+	if (strchr(command, '/'))
 	{
 		if (access(command, X_OK) == 0)
 			return (strdup(command));

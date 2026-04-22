@@ -16,9 +16,7 @@ int execute(char **args, char **av, int countline)
 	if (!args || !args[0])
 		return (-1);
 	if (strcmp(args[0], "exit") == 0)
-	{
 		exit(0);
-	}
 	path_complete = on_path(args[0]);
 	if (!path_complete)
 	{
@@ -39,7 +37,7 @@ int execute(char **args, char **av, int countline)
 			fprintf(stderr, "%s: %d: %s: not found\n",
 			av[0], countline, args[0]);
 			free(path_complete);
-			exit(127);
+			_exit(127);
 		}
 	}
 	else
