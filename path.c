@@ -6,18 +6,16 @@
  * Return: pointer to PATH string
  */
 char *get_path_env(void)
-	{
+{
 	int i;
 
 	for (i = 0; environ[i]; i++)
 	{
-		printf("%s", environ[3]);
 		if (strncmp(environ[i], "PATH=", 5) == 0)
-		return (environ[i] + 5);
+			return (environ[i] + 5);
 	}
 	return (NULL);
-	}
-
+}
 /**
  * find_path - search command in PATH
  * @cmd: command name
@@ -33,10 +31,10 @@ char *find_path(char *cmd)
 		return (strdup(cmd));
 	path = get_path_env();
 	if (!path)
-		return (NULL);
+	return (NULL);
 	copy = strdup(path);
 	if (!copy)
-		return (NULL);
+	return (NULL);
 	dir = strtok(copy, ":");
 	while (dir)
 	{
