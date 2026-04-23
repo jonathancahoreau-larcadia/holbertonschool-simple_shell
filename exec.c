@@ -12,7 +12,7 @@ int execute(char **args, char *prog, int line)
 {
 	pid_t pid;
 	char *full = find_path(args[0]);
-
+	int status;
 	if (!full)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n",
@@ -47,7 +47,7 @@ int execute(char **args, char *prog, int line)
 		_exit(126);
 	}
 	else
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &status, 0);
 	free(full);
-	return (1);
+	return (status);
 }

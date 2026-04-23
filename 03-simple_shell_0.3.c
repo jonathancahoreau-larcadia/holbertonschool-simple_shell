@@ -25,10 +25,9 @@ int main(int ac, char **av)
 		if (!line)
 		{
 			if (interactive)
-				write(STDOUT_FILENO, "\n", 1);
+			write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
-
 		line_count++;
 		args = split_line(line);
 
@@ -40,7 +39,7 @@ int main(int ac, char **av)
 				free(line);
 				break;
 			}
-		status = execute(args, av[0], line_count);
+			status = execute(args, av[0], line_count);
 		}
 
 		free_tokens(args);
