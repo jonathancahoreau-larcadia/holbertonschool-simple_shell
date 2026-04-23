@@ -34,3 +34,19 @@ void print_exec_error(char *prog, int line, char *cmd)
 		fprintf(stderr, "%s: %d: %s: not found\n",
 		prog, line, cmd);
 }
+/**
+ * print_env - prints the current environment
+ *
+ * Return: void
+ */
+void print_env(void)
+{
+	int i = 0;
+
+	while (environ[i])
+	{
+		write(STDOUT_FILENO, environ[i], strlen(environ[i]));
+		write(STDOUT_FILENO, "\n", 1);
+		i++;
+	}
+}
