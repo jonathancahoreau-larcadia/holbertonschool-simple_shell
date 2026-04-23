@@ -11,22 +11,12 @@
 int execute(char **args, char **av, int countline)
 {
 	pid_t pid;
-	int status, perm_denied;
+	int status;
 	char *path_complete;
 
 	if (!args || !args[0])
 		return (-1);
-	path_complete = on_path(args[0], &perm_denied);
-	if (path_complete == NULL)
-	{
-		if (perm_denied)
-			fprintf(stderr, "%s: %d: %s: Permission denied\n",
-				av[0], countline, args[0]);
-		else
-			fprintf(stderr, "%s: %d: %s: not found\n",
-				av[0], countline, args[0]);
-		return (perm_denied ? 126 : 127);
-	}
+	path_complete = on_path(args[0]);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -37,15 +27,19 @@ int execute(char **args, char **av, int countline)
 	if (pid == 0)
 	{
 		execve(path_complete, args, environ);
-		if (errno == EACCES)
+
+		if (errno == EISDIR)
+			fprintf(stderr, "%s: %d: %s: Is a directory\n",
+				av[0], countline, args[0]);
+		else if (errno == EACCES)
 			fprintf(stderr, "%s: %d: %s: Permission denied\n",
 				av[0], countline, args[0]);
-		else if (errno == ENOENT)
+		else
 			fprintf(stderr, "%s: %d: %s: not found\n",
 				av[0], countline, args[0]);
-		else
-			fprintf(stderr, "%s: %d: %s: %s\n",
-				av[0], countline, args[0], strerror(errno));
+
+		if (errno == EISDIR || errno == EACCES)
+			exit(126);
 		free(path_complete);
 		exit(127);
 	}
@@ -53,7 +47,5 @@ int execute(char **args, char **av, int countline)
 	free(path_complete);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
-	return (0);
+	return (1);
 }

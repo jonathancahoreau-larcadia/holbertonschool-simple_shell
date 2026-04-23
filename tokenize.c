@@ -10,7 +10,7 @@
 char **tokenize(const char *line)
 {
 	char **args = NULL, **tmp, *token, *copy;
-	size_t count = 0, capacity = 4, new_capacity, i;
+	size_t count = 0, capacity = 4, i = 0, new_capacity = 0;
 
 	if (!line)
 		return (NULL);
@@ -26,18 +26,20 @@ char **tokenize(const char *line)
 	token = strtok(copy, " \t\n");
 	while (token)
 	{
-		if (count == capacity)
+		if (count + 1 >= capacity)
 		{
-			tmp = realloc(args, new_capacity * sizeof(char *));
+			capacity *= 2;
+			tmp = malloc(capacity * sizeof(char *));
 			if (!tmp)
 			{
 				free(copy);
-				for (i = 0; i < count; i++)
-					free(args[i]);
 				return (NULL);
 			}
+			for(i = 0; i < count; i++)
+				tmp[i] = args[i];
+			free(args);
 			args = tmp;
-			new_capacity = capacity * 2;
+			capacity = new_capacity;
 		}
 		args[count] = strdup(token);
 		if (!args[count])
