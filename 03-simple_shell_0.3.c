@@ -32,6 +32,12 @@ int main(int ac, char **av)
 		args = tokenize(line);
 		if (!args)
 			continue;
+		if (strcmp(args[0], "exit") == 0)
+		{
+			free_tokens(args);
+			free(line);
+			exit(0);
+		}
 		execute(args, av, countline);
 		free_tokens(args);
 	}

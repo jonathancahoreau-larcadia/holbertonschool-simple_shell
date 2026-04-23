@@ -6,9 +6,10 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <errno.h>
 extern char **environ;
 char **tokenize(const char *line);
 void free_tokens(char **args);
 int execute(char **args, char **av, int countline);
-char *on_path(char *command);
+char *on_path(char *command, int *perm_denied);
 #endif
