@@ -30,11 +30,9 @@ int run_child_process(char *full, char **args, char *prog, int line)
 			_exit(127);
 		_exit(126);
 	}
-	waitpid(pid, &status, 0);
+	wait(&status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	if (WIFSIGNALED(status))
-		return (128 + WTERMSIG(status));
 	return (status);
 }
 /**
@@ -48,26 +46,29 @@ int run_child_process(char *full, char **args, char *prog, int line)
 int execute(char **args, char *prog, int line)
 {
 	char *full = find_path(args[0]);
+	int status;
 
 	if (!full)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n",
 		prog, line, args[0]);
-		return (1);
+		return (127);
 	}
 	if (access(full, F_OK) != 0)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n",
 		prog, line, args[0]);
 		free(full);
-		return (1);
+		return (127);
 	}
 	if (access(full, X_OK) != 0)
 	{
 		fprintf(stderr, "%s: %d: %s: Permission denied\n",
 		prog, line, args[0]);
 		free(full);
-		return (1);
+		return (126);
 	}
-	return (run_child_process(full, args, prog, line));
+	status = run_child_process(full, args, prog, line);
+	free(full);
+	return (status);
 }
