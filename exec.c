@@ -13,6 +13,7 @@ int execute(char **args, char *prog, int line)
 	pid_t pid;
 	char *full = find_path(args[0]);
 	int status;
+	
 	if (!full)
 	{
 		fprintf(stderr, "%s: %d: %s: not found\n",
@@ -49,5 +50,7 @@ int execute(char **args, char *prog, int line)
 	else
 		waitpid(pid, &status, 0);
 	free(full);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
 	return (status);
 }
