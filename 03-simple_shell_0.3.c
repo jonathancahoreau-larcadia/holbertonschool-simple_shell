@@ -12,7 +12,7 @@ int main(int ac, char **av)
 	char *line = NULL;
 	char **args = NULL;
 	int interactive = isatty(STDIN_FILENO);
-	int line_count = 0, status;
+	int line_count = 0, status = 0;
 
 	(void)ac;
 
