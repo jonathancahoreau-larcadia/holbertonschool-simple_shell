@@ -37,7 +37,7 @@ int main(int ac, char **av)
 			{
 				free_tokens(args);
 				free(line);
-				return (0);
+				exit(status);
 			}
 			status = execute(args, av[0], line_count);
 		}
