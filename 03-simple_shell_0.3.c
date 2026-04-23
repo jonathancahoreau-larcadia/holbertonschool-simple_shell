@@ -1,46 +1,51 @@
 #include "main.h"
+
 /**
- * main - Entry point
+ * main - entry point of the shell
  * @ac: argument count
  * @av: argument vector
- * Return: (0), if sucess
+ *
+ * Return: 0
  */
 int main(int ac, char **av)
 {
-	char *line = NULL, **args;
-	size_t len = 0;
-	ssize_t nread = 0;
-	int interactive = isatty(STDIN_FILENO), countline = 0;
-	(void) ac;
+	char *line = NULL;
+	char **args = NULL;
+	int interactive = isatty(STDIN_FILENO);
+	int line_count = 0, status;
+
+	(void)ac;
 
 	while (1)
 	{
 		if (interactive)
-			printf("$ ");
-		nread = getline(&line, &len, stdin);
-		countline++;
-		if (nread == -1)
+			write(STDOUT_FILENO, "($) ", 4);
+
+		line = read_line();
+		if (!line)
 		{
 			if (interactive)
-				printf("\n");
-			free(line);
-			exit(0);
+				write(STDOUT_FILENO, "\n", 1);
+			break;
 		}
-		if (line[nread - 1] == '\n')
-			line[nread - 1] = '\0';
 
-		args = tokenize(line);
-		if (!args)
-			continue;
-		if (strcmp(args[0], "exit") == 0)
+		line_count++;
+		args = split_line(line);
+
+		if (args && args[0])
 		{
-			free_tokens(args);
-			free(line);
-			exit(0);
+			if (strcmp(args[0], "exit") == 0)
+			{
+				free_tokens(args);
+				free(line);
+				break;
+			}
+		status = execute(args, av[0], line_count);
 		}
-		execute(args, av, countline);
+
 		free_tokens(args);
+		free(line);
 	}
-	free(line);
-	return (0);
+
+	return (status);
 }
