@@ -1,18 +1,17 @@
-.TH SIMPLE_SHELL 1 "April 2026" "1.0" "Simple Shell Manual"
+.TH SIMPLE_SHELL
 
 .SH NAME
-simple_shell \- a simple UNIX command line interpreter
+simple_shell, a simple UNIX command line interpreter
 
 .SH SYNOPSIS
 .B hsh
-.RI [ command ]
 
 .SH DESCRIPTION
 .B hsh
 is a simple UNIX command line interpreter that reads and executes commands from standard input or from a pipeline.
 It replicates the basic behavior of
-.B /bin/sh
-and supports both in interactive and non-interactive modes.
+.B /bin/ls
+and supports both in interactive and non-interactive mode.
 
 In
 .B interactive mode,
@@ -134,10 +133,5 @@ Non-interactive with a file:
 .BR strtok (3)
 
 .SH AUTHORS
-Written by the authors listed in the AUTHORS file at the root of the repository.
-
-.SH BUGS
-No known bugs at this time.
-Report bugs to the project repository on GitHub:
-.B https://github.com/holbertonschool-simple_shell
+Written by the authors listed in the AUTHORS file at the root of the repositor
 EOF
