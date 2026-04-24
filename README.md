@@ -150,3 +150,6 @@ github :adib-commits
 Developer — Holberton Simple Shell Project
 
 --------------------------------------------------------------------------
+
+<img width="1024" height="1536" alt="Copilot_20260424_105617" src="https://github.com/user-attachments/assets/3e9f5583-767f-4890-a411-d13a0321a7ca" />
+
