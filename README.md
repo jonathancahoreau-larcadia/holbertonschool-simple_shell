@@ -151,3 +151,6 @@ Developer — Holberton Simple Shell Project
 
 --------------------------------------------------------------------------
 
+<img width="1024" height="1536" alt="Man Simple Shell" src="https://github.com/user-attachments/assets/1e27a33a-489d-4ec2-abc0-c39bdd7ce301" />
+
+
