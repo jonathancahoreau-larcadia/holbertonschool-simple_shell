@@ -50,7 +50,8 @@ hsh main.c shell.c
 $
 ```
 
-image.png
+<img width="568" height="1096" alt="Flowchart Simple Shell 2 drawio" src="https://github.com/user-attachments/assets/ba9bcbdf-cbee-4894-8e3b-b4abc4d06087" />
+
 
 -- Features --
 
