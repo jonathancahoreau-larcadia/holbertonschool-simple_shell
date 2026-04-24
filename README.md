@@ -151,5 +151,5 @@ Developer — Holberton Simple Shell Project
 
 --------------------------------------------------------------------------
 
-<img width="1024" height="1536" alt="Copilot_20260424_105617" src="https://github.com/user-attachments/assets/81098fdd-84c9-478b-b079-afa511366956" />
+<img width="1024" height="1536" alt="Copilot_20260424_105617" src="https://github.com/user-attachments/assets/08a62ae0-2d8b-40af-b1d0-ed11e5a49048" />
 
