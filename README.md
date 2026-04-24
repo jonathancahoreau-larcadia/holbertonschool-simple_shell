@@ -50,6 +50,8 @@ hsh main.c shell.c
 $
 ```
 
+image.png
+
 -- Features --
 
 Display a prompt and wait for user input
