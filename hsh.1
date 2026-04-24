@@ -1,0 +1,157 @@
+.TH SIMPLE_SHELL 1 "Simple Shell Manual" "Holberton School" "User Commands"
+
+.SH NAME
+simple_shell \- a simple UNIX command line interpreter
+
+.SH SYNOPSIS
+.B hsh
+
+.SH DESCRIPTION
+.B hsh
+is a simple UNIX command line interpreter that reads and executes commands from
+standard input or from a pipeline. It supports both interactive and
+non-interactive modes.
+
+In
+.B interactive mode,
+the shell displays a prompt and waits for the user to type a command. The prompt
+is displayed again after each command is executed.
+
+In
+.B non-interactive mode,
+the shell reads commands from a pipe or a file without displaying a prompt.
+
+.SH USAGE
+.TP
+Interactive mode:
+.EX
+$ ./hsh
+($) /bin/ls
+($) exit
+.EE
+
+.TP
+Non-interactive mode:
+.EX
+$ echo "/bin/ls" | ./hsh
+.EE
+
+.TP
+.B exit
+Exit the shell. The shell terminates with the exit status of the last executed command.
+
+.TP
+.B env
+Print the current environment. Displays all environment variables in the format NAME=value.
+
+.SH COMMAND EXECUTION
+When a command is entered, the shell performs the following steps:
+
+.IP 1.
+Read the command line using
+.BR getline (3).
+
+.IP 2.
+Parse the command line into tokens using
+.BR strtok (3).
+
+.IP 3.
+Check if the command is a builtin. If so, execute it directly.
+
+.IP 4.
+Search for the command executable in the directories listed in the
+.B PATH
+environment variable using
+.BR access (2).
+
+.IP 5.
+If found, create a child process using
+.BR fork (2)
+and execute the command using
+.BR execve (2).
+
+.IP 6.
+The parent process waits for the child to finish using
+.BR wait (2).
+
+.SH PATH
+The shell searches for commands in the directories listed in the
+.B PATH
+environment variable.
+
+If the command is given as an absolute or relative path (e.g.
+.IR /bin/ls
+or
+.IR ./myscript ),
+the PATH search is skipped.
+
+If the command is not found in any directory listed in PATH, an error message is printed and no child process is created.
+
+.SH ERROR HANDLING
+If a command cannot be found, the shell prints an error to standard error in the following format:
+
+.RS
+.B argv[0]: LINE_NUMBER: COMMAND: not found
+.RE
+
+Example:
+.RS
+.B ./hsh: 1: qwerty: not found
+.RE
+
+.SH SIGNALS
+.TP
+.B Ctrl+C
+Does not exit the shell (SIGINT is ignored in the main process).
+
+.TP
+.B Ctrl+D
+Signals end of file (EOF) and exits the shell cleanly.
+
+.SH COMPILATION
+.EX
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+.EE
+
+.SH EXAMPLES
+.TP
+Run a command with arguments:
+.EX
+($) ls -la /tmp
+.EE
+
+.TP
+Use an absolute path:
+.EX
+($) /bin/echo Hello World
+.EE
+
+.TP
+Display environment variables:
+.EX
+($) env
+.EE
+
+.TP
+Exit the shell:
+.EX
+($) exit
+.EE
+
+.TP
+Non-interactive with a file:
+.EX
+$ cat commands.txt | ./hsh
+.EE
+
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1),
+.BR execve (2),
+.BR fork (2),
+.BR wait (2),
+.BR getline (3),
+.BR strtok (3)
+
+.SH AUTHORS
+Written by the authors listed in the AUTHORS file at the root of the repository.
