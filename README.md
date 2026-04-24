@@ -34,6 +34,10 @@ The behavior aims to mimic a minimal POSIX shell.
 
 ---
 
+<img width="568" height="1096" alt="Flowchart Simple Shell 2 drawio" src="https://github.com/user-attachments/assets/0d7f7eb4-4522-427b-8b70-9054c1c5289c" />
+
+---
+
 ## ✨ Features
 
 - Executes simple commands (e.g., `ls`, `pwd`, `echo`)
